@@ -1,0 +1,19 @@
+A partir des fichiers sources, récupérer grâce au script, pour un pays passé
+en paramètre, des statistiques sur la consommation.
+Dessiner un graphique avec les informations pertinentes
+Générer automatiquement des dossiers
+Traiter un ou plusieurs fichier csv de taille conséquentes
+
+Générer des dossier :
+	- avant de générer les dossiers, vérifier si ils existent déjà
+	- un dossier contenant les données extraites du fichier source pour unpays et son graph
+	- un dossier contenant les données extraites du fichier source pour uncontinent et son graph
+
+Dans le terminal : 
+	- afficher à partir des fichiers sources le pays qui produit le plus  d'énergie renouvelable
+	- affihcer à partir des fichiers sources le pays qui produit le plus  d'énergie non renouvelable
+
+A faire en plus :
+	- deux commandes aux choix (triage...)
+
+
