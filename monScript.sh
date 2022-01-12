@@ -9,7 +9,7 @@ i=0
 
 while [ true ]
 do
-	colonne=head -1 Sources/Country_Consumption_TWH.csv | cut -d',' -f$i 
+	colonne=`head -1 Sources/Country_Consumption_TWH.csv | cut -d',' -f$i` 
 	if [ $pays=$colonne ];then
 		cut -d',' -f$i Sources/Country_Consumption_TWH.csv > conso.csv
 		break
