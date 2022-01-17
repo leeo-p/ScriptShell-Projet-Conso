@@ -14,6 +14,16 @@ Dans le terminal :
 	- affihcer à partir des fichiers sources le pays qui produit le plus  d'énergie non renouvelable
 
 A faire en plus :
-	- deux commandes aux choix (triage...)
+	-Trier la conso d'hydro par odre croisssant des pays en affichant que le nom des pays:
+	tail -20 top20CountriesPowerGeneration.csv | sort -t',' -k2n | cut -d',' -f1
+	-Trier la conso de Biofuel par ordre croissant des pays en affichant seulement le nom des pays:
+	tail -20 top20CountriesPowerGeneration.csv | sort -t',' -k3n | cut -d',' -f1
+	- Trier la conso de Solar PV par ordre croissant des pays en affichant seulement le nom des pays:
+	tail -20 top20CountriesPowerGeneration.csv | sort -t',' -k4n | cut -d',' -f1
+	- Trier la conso de Geopthermal par ordre croissant des pays en affichant seulement le nom des pays:
+	tail -20 top20CountriesPowerGeneration.csv | sort -t',' -k5n | cut -d',' -f1
+	-Trier la conso total par ordre croissant des pays en affichant seulement le nom des pays:
+	tail -20 top20CountriesPowerGeneration.csv | sort -t',' -k6n | cut -d',' -f1
+
 
 
