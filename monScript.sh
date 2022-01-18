@@ -3,19 +3,17 @@
 echo "Le paramètre 1 est $1"
 echo "Le paramètre 2 est $2"
 
-type=$1
-nom=$2
-
-echo $type
-echo $nom
+type=$1 #Variable prenant le premier paramètre qui définit si le deuxième est un continant ou un pays
+nom=$2 #Variable prenant le deuxième paramètre qui indique le nom du pays ou du continent
 
 country="Country"
 continent="Continent"
 
 i=1
 
+#Fonction permettant de faire un graph à partir de données récupérées dans les fichiers sources
 function graph() {
-	gnuplot -e "reset;
+	gnuplot -e "reset; 
 	set terminal png;
 	set output 'Resultats/$1/conso.png';
 	set datafile separator ',';
@@ -26,7 +24,7 @@ function graph() {
 	"
 }
 
-# grapher un histogramme
+#Fonction permettant de grapher un histogramme
 function graphisto() {
 	gnuplot -e "reset;
 	set terminal png;
@@ -42,31 +40,31 @@ function graphisto() {
 	set xtics nomirror rotate by -45 scale 0;
 	plot 'Resultats/$1/prod.csv' u 2:xtic(1) lt 2 notitle;
 	"
-	# lt 2 --> couleur verte
-	# xtic(1) --> mettre la colonne 1 en intitulés d'abscisse
+	#lt 2 sert à mettre la couleur verte
+	#xtic(1) sert à mettre la colonne 1 en intitulés d'abscisse
 }
 
-if [[ "$type" = "$country" ]];then # si param 1 = Country
-	while [[ `head -1 Sources/Country_Consumption_TWH.csv | cut -d',' -f"$i"` ]]
+if [[ "$type" = "$country" ]];then #Si le paramètre 1 = Country
+	while [[ `head -1 Sources/Country_Consumption_TWH.csv | cut -d',' -f"$i"` ]] #on parcours ce fichier colonne par colonne
 	do
-		if [[ "$nom" = `head -1 Sources/Country_Consumption_TWH.csv | cut -d',' -f"$i"` ]];then
-			if [ -d Resultats ];then
+		if [[ "$nom" = `head -1 Sources/Country_Consumption_TWH.csv | cut -d',' -f"$i"` ]];then #Si paramètre 2 = nom du pays cherché
+			if [ -d Resultats ];then #On vérifie si le dossier existe
 				echo "Le dossier Resultats existe déjà"
-				cd Resultats
-				if [ -d "$nom" ];then
-					echo "Le dossier "$nom" existe déjà !"
+				cd Resultats #Si oui on rentre dedans
+				if [ -d "$nom" ];then #On vérifie si le dossier du pays existe
+					echo "Le dossier "$nom" existe déjà !" #Si oui on ne fait rien
 				else
-					mkdir "$nom"
+					mkdir "$nom" #Sinon on le créer
 				fi
-				cd ..
+				cd .. #On sort du dossier Resultats
 			else
-				mkdir -p Resultats/"$nom"
+				mkdir -p Resultats/"$nom" #Sinon on créer récursivement les deux dossiers
 			fi
-			cut -d',' -f1,"$i" Sources/Country_Consumption_TWH.csv > Resultats/"$nom"/conso.csv
-			graph $nom
-			break
+			cut -d',' -f1,"$i" Sources/Country_Consumption_TWH.csv > Resultats/"$nom"/conso.csv #On crée le fichier de sortie et on y met les informations utiles
+			graph $nom #Apel de la fonction graph 
+			break #On sort de la boucle while
 		else
-			let "i++"
+			let "i++" #On incrémente i
 		fi
 	done
 elif [[ "$type" = "$continent" ]];then # si param 1 = Continent
