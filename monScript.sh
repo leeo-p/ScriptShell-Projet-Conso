@@ -24,6 +24,19 @@ function graph() {
 	"
 }
 
+function comparegraph() {
+	gnuplot -e "reset; 
+	set terminal png;
+	set output 'Resultats/$1/compare.png';
+	set datafile separator ',';
+	set xlabel 'Productions';
+	set ylabel 'Energies';
+	set title 'Conso par an  de : $1';
+	plot 'Resultats/$1/compare.csv' u 1:2 w l title '$1'; 
+	"
+}
+#'Resultats/$1/compare.csv' u 1:3 w l title '$1','Resultats/$1/compare.csv' u 1:4 w l title '$1','Resultats/$1/compare.csv' u 1:2 w l title '$1';
+
 #Fonction permettant de grapher un histogramme
 function graphisto() {
 	gnuplot -e "reset;
@@ -106,6 +119,22 @@ elif [[ "$type" = "Renouv_par_pays" ]];then # si param 1 = Renouv_par_pays
 	fi
 	cut -d',' -f1,6 Sources/top20CountriesPowerGeneration.csv > Resultats/"$nom_dossier"/prod.csv
 	graphisto $nom_dossier
+elif [[ "$type" = "Energie_Compare" ]];then
+	nom_dossier="Comparaison"
+	if [ -d Resultats ];then
+		echo "Le dossier Resultats existe déjà"
+		cd Resultats
+		if [ -d "$nom_dossier" ];then
+			echo "Le dossier '$nom_dossier' existe déjà !"
+		else
+			mkdir $nom_dossier
+		fi
+		cd ..
+	else
+		mkdir -p Resultats/$nom_dossier
+	fi
+	cut -d',' -f1-5 Sources/top20CountriesPowerGeneration.csv > Resultats/"$nom_dossier"/compare.csv
+	comparegraph $nom_dossier
 
 elif [[ "$type" = "Renouvelable" ]];then
 	pays=`sort -t',' -k6nr Sources/top20CountriesPowerGeneration.csv | head -1 | cut -d',' -f1`
