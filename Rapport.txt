@@ -46,7 +46,7 @@ Laura Sabadie :
 V) Bilan personnel individuel
 
 Léo Portet :
-    Pour ma part, j'ai trouvé ce projet intéressant et enrichissant. Le fait d'être quand même assez libre pour réaliser ce projet permet de très vite trouver des solutions même si au départ le fait d'être sans trop d'indications est un peu compliqué. En effet il faut arriver à se poser les bonnes questions pour trouver les réelles attentes du projet. Il m'a aussi appris à chercher de l'aide tout seul lorsqu'un problème est rencontré pour le résoudre. Il m'a permis d'apprendre de nouvelles méthodes de code en ScriptShell, de nouvelles technologies comme Gnuplot.
+    Pour ma part, j'ai trouvé ce projet intéressant et enrichissant. Le fait d'être quand même assez libre pour réaliser ce projet permet de très vite trouver des solutions même si au départ le fait d'être sans trop d'indications est un peu compliqué. En effet il faut arriver à se poser les bonnes questions pour trouver les réelles attentes du projet. Il m'a aussi appris à chercher de l'aide tout seul lorsqu'un problème est rencontré pour le résoudre. Il m'a permis d'apprendre de nouvelles méthodes de code en ScriptShell, de nouvelles technologies comme Gnuplot. Et bien sûr cela renforce aussi la capacité à travailler en équipe et à s'entraider dans les différentes tâches à réaliser.
 
 Laura Sabadie :
     
