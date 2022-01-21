@@ -9,10 +9,6 @@
 type=$1 #variable prenant le premier paramètre qui définit si le deuxième est un continant ou un pays
 nom=$2 #variable prenant le deuxième paramètre qui indique le nom du pays ou du continent
 
-echo $type
-echo $nom
-
-country="Country"
 continent="Continent"
 
 i=1 #variable d'incrémentation
@@ -25,7 +21,7 @@ function graph() {
 	set datafile separator ',';
 	set xlabel 'Années';
 	set ylabel 'Consommation';
-	set title 'Conso par an  de : $1';
+	set title 'Conso par an de : $1';
 	plot 'Resultats/$1/conso.csv' u 1:2 w l title '$1' ;
 	"
 }
@@ -71,15 +67,18 @@ function graphisto() {
 	#xtics nomirror rotate by -45 sert à incliner de 45 degrés les noms de pays pour qu'ils soient plus lisibles
 }
 
-if [[ "$type" = "$country" ]];then #si le paramètre 1 = Country
+if [[ "$type" = "Country" ]];then #si le paramètre 1 = Country
+	echo
+	echo "----------------------------------"
+	echo "Vous avez choisi le pays : $nom"
+	echo "----------------------------------"
 	while [[ `head -1 Sources/Country_Consumption_TWH.csv | cut -d',' -f"$i"` ]] #on parcours ce fichier colonne par colonne
 	do
 		if [[ "$nom" = `head -1 Sources/Country_Consumption_TWH.csv | cut -d',' -f"$i"` ]];then #si le paramètre 2 = nom du pays cherché
 			if [ -d Resultats ];then #on vérifie si le dossier existe
-				echo "Le dossier Resultats existe déjà"
 				cd Resultats #si oui on rentre dedans
 				if [ -d "$nom" ];then #on vérifie si le dossier du pays existe
-					echo "Le dossier "$nom" existe déjà !" #si oui on ne fait rien
+					echo #si oui on ne fait rien
 				else
 					mkdir "$nom" #sinon on le crée
 				fi
@@ -89,20 +88,24 @@ if [[ "$type" = "$country" ]];then #si le paramètre 1 = Country
 			fi
 			cut -d',' -f1,"$i" Sources/Country_Consumption_TWH.csv > Resultats/"$nom"/conso.csv #on crée le fichier de sortie avec les infos du pays
 			graph $nom #appel de la fonction graph
+			xdg-open Resultats/"$nom"/conso.png
 			break #on sort de la boucle
 		else
 			let "i++" #on incrémente i
 		fi
 	done
-elif [[ "$type" = "$continent" ]];then #si le paramètre 1 = Continent
+elif [[ "$type" = "Continent" ]];then #si le paramètre 1 = Continent
+	echo
+	echo "---------------------------------------"
+	echo "Vous avez choisi le continent : $nom"
+	echo "---------------------------------------"
 	while [[ `head -1 Sources/Continent_Consumption_TWH.csv | cut -d',' -f"$i"` ]] #on parcours le fichier colonne par colonne
 	do
 		if [[ "$nom" = `head -1 Sources/Continent_Consumption_TWH.csv | cut -d',' -f"$i"` ]];then #si le paramètre 2 = nom du continent cherché 
 			if [ -d Resultats ];then #on vérifie si le dossier existe
-				echo "Le dossier Resultats existe déjà"
 				cd Resultats #si oui on rentre dedans
 				if [ -d "$nom" ];then #on vérifie si le dossier du continent existe
-					echo "Le dossier "$nom" existe déjà !" #si oui on ne fait rien
+					echo #si oui on ne fait rien
 				else
 					mkdir "$nom" #sinon on le crée
 				fi
@@ -112,19 +115,23 @@ elif [[ "$type" = "$continent" ]];then #si le paramètre 1 = Continent
 			fi
 			cut -d',' -f1,"$i" Sources/Continent_Consumption_TWH.csv > Resultats/"$nom"/conso.csv #on crée le fichier de sotie avec les infos du continent
 			graph $nom #appel de la fonction graph
+			xdg-open Resultats/"$nom"/conso.png
 			break #on sort de la boucle
 		else
 			let "i++" #on incrémente i
 		fi
 	done
 elif [[ "$type" = "Renouv_par_pays" ]];then #si le paramètre 1 = Renouv_par_pays
+	echo
+	echo "----------------------------------------------------"
+	echo "Vous avez choisi les énergies renouvelables par pays"
+	echo "----------------------------------------------------"
 	nom_dossier="Renouvelables"
 	#vérification de l'existence des dossiers
 	if [ -d Resultats ];then
-		echo "Le dossier Resultats existe déjà"
 		cd Resultats
 		if [ -d "$nom_dossier" ];then
-			echo "Le dossier $nom_dossier existe déjà !"
+			echo
 		else
 			mkdir $nom_dossier
 		fi
@@ -134,15 +141,19 @@ elif [[ "$type" = "Renouv_par_pays" ]];then #si le paramètre 1 = Renouv_par_pay
 	fi
 	cut -d',' -f1,6 Sources/top20CountriesPowerGeneration.csv > Resultats/"$nom_dossier"/prod.csv #on génère le fichier de sortie avec les infos attendues pour le graph
 	graphisto $nom_dossier #appel de la fonction graphisto
+	xdg-open Resultats/"$nom_dossier"/prod.png
 
 elif [[ "$type" = "Energie_Compare" ]];then #si le paramètre 1 = Energie_Compare
+	echo
+	echo "-----------------------------------------------------------------"
+	echo "Vous avez choisi le compartif des énergies renouvelables par pays"
+	echo "-----------------------------------------------------------------"
 	nom_dossier="Comparaison"
 	#vérification de l'existance des dossiers
 	if [ -d Resultats ];then
-		echo "Le dossier Resultats existe déjà"
 		cd Resultats
 		if [ -d "$nom_dossier" ];then
-			echo "Le dossier $nom_dossier existe déjà !"
+			echo 
 		else
 			mkdir $nom_dossier
 		fi
@@ -152,16 +163,29 @@ elif [[ "$type" = "Energie_Compare" ]];then #si le paramètre 1 = Energie_Compar
 	fi
 	cut -d',' -f1-5 Sources/top20CountriesPowerGeneration.csv > Resultats/"$nom_dossier"/compare.csv #on génère le fichier de sortie avec les infos attendues pour le graph
 	comparegraph $nom_dossier #appel de la fonction comparegraph
+	xdg-open Resultats/"$nom_dossier"/compare.png
 
 #Affichages terminal
 elif [[ "$type" = "Renouvelable" ]];then #si le paramètre 1 = Renouvelable
 	pays=`sort -t',' -k6nr Sources/top20CountriesPowerGeneration.csv | head -1 | cut -d',' -f1` #on trie le fichier pour trouver le pays
 	res=`sort -t',' -k6nr Sources/top20CountriesPowerGeneration.csv | head -1 | cut -d',' -f6` #on trie le fichier pour trouver sa production
+	echo
+	echo "------------------------------------------------------------------------"
 	echo "Le pays qui produit le plus est : $pays, en effet il produit $res TWh" #on affiche dans le terminal les éléments recherchés
+	echo "------------------------------------------------------------------------"
+	echo
 elif [[ "$type" = "Non_Renouvelable" ]];then #si le paramètre 1 = Non_Renouvelable
 	pays=`sort -t',' -k6n Sources/top20CountriesPowerGeneration.csv | head -2 | tail -1 | cut -d',' -f1` #on trie le fichier pour trouver le pays
 	res=`sort -t',' -k6n Sources/top20CountriesPowerGeneration.csv | head -2 | tail -1 | cut -d',' -f6` #on trie le fichier pour trouver sa production
+	echo
+	echo "------------------------------------------------------------------------"
 	echo "Le pays qui produit le moins est : $pays, en effet il produit $res TWh" #on affiche dans le terminal les éléments recherchés
+	echo "------------------------------------------------------------------------"
+	echo
 else
+	echo
+	echo "--------------------------------------------------------------"
 	echo "Veuillez recommencer le paramètre n°1 n'est pas valide, merci."
+	echo "--------------------------------------------------------------"
+	echo
 fi
