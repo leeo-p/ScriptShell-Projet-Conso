@@ -33,14 +33,21 @@ function graph() {
 #Fonction permettant de faire un graph de comparaison des différentes productions d'énergies renouvelables
 function comparegraph() {
 	gnuplot -e "reset; 
-	set terminal png;
+	set terminal png size 1920,1080;
 	set output 'Resultats/$1/compare.png';
 	set datafile separator ',';
-	set xlabel 'Productions';
-	set ylabel 'Energies';
-	set title 'Conso par an  de : $1';
-	plot 'Resultats/$1/compare.csv' u 1:2 'compare.csv' u 1:3 'compare.csv' u 1:4 'compare.csv' u 1:5 w l title '$1'; 
+	set xlabel 'Pays';
+	set logscale y 10;
+	set ylabel 'Production';
+	set title 'Différentes Productions';
+	set style data histogram;
+	set boxwidth 1;
+	set style fill solid border -1;
+	set style histogram clustered gap 1;
+	set xtics nomirror rotate by -60 scale 0;
+	plot 'Resultats/$1/compare.csv' u 2:xtic(1) lt 7 title 'Hydro', 'Resultats/$1/compare.csv' u 3:xtic(1) lt 1 title 'Biofuel', 'Resultats/$1/compare.csv' u 4:xtic(1) lt 4 title 'Solar PV', 'Resultats/$1/compare.csv' u 5:xtic(1) lt 2 title 'Geothermal' ; 
 	"
+	#logscale y permet de mettre l'échelle en logarithmique, pour une lecture plus aisée
 }
 
 #Fonction permettant de grapher un histogramme
