@@ -14,19 +14,6 @@ II) Explication de l'arborescence de fichiers générés
 	Pour revenir sur l'arborescence des fichiers nous allons vous en expliquer le déroulement. Tout d'abord les fichiers sources ne se trouve pas à la racine du script, ils sont dans un dossier Sources. Lorsque le script est exécuté, il génère des fichiers résultats qui sont répertoriés dans un dossier Resultats puis dans un sous dossier correspondant au nom du Pays ou du Continents. Dans ce dossier se trouve alors deux fichiers de résultats : un .csv pour les données qui nous intéressent et un .png pour le graphique généré par Gnuplot.
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 III) Retour sur le travail
 
     A) Ce qui a été fait 
